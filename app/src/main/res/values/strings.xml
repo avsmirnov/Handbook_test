@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Handbook</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Настройки</string>
+
+    <string name="contacts">
+&lt;h4&gt;Москва&lt;/h4&gt;
+Адрес: 105082, Москва, Спартаковская площадь, 14, строение 2, офис 2206&lt;br /&gt;
+Телефон: +7 &lt;b&gt; (495) 663-93-65&lt;/b&gt; &lt;br /&gt;
+Электронная почта: mail@sitesoft.ru&lt;br /&gt;&lt;br /&gt;
+
+&lt;h4&gt;Екатеринбург&lt;/h4&gt;
+Адрес: ул. Белинского, 86, 7 секция, 6 этаж, офис 601&lt;br /&gt;
+Телефон: +7 &lt;b&gt;(343) 345-04-02&lt;/b&gt; &lt;br /&gt;
+Электронная почта: mail@sitesoft.ru
+    </string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Предприятия</item>
+        <item >Новости</item>
+        <item >Контакты</item>
+    </string-array>
+
+</resources>
