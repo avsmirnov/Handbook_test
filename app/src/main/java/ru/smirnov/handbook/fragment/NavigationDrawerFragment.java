@@ -1,4 +1,4 @@
-package ru.smirnov.handbook.fragments;
+package ru.smirnov.handbook.fragment;
 
 import android.app.ActionBar;
 import android.app.Activity;

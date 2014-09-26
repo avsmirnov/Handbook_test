@@ -4,7 +4,15 @@
     <string name="app_name">Handbook</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_settings">Настройки</string>
+
+
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Предприятия</item>
+        <item >Новости</item>
+        <item >Контакты</item>
+    </string-array>
 
     <string name="contacts">
 &lt;h4&gt;Москва&lt;/h4&gt;
@@ -17,12 +25,5 @@
 Телефон: +7 &lt;b&gt;(343) 345-04-02&lt;/b&gt; &lt;br /&gt;
 Электронная почта: mail@sitesoft.ru
     </string>
-
-    <!-- Nav Drawer Menu Items -->
-    <string-array name="nav_drawer_items">
-        <item >Предприятия</item>
-        <item >Новости</item>
-        <item >Контакты</item>
-    </string-array>
 
 </resources>

@@ -1,4 +1,4 @@
-package ru.smirnov.handbook;
+package ru.smirnov.handbook.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 
-import ru.smirnov.handbook.fragments.ContactsFragment;
-import ru.smirnov.handbook.fragments.HandbookFragment;
-import ru.smirnov.handbook.fragments.NavigationDrawerFragment;
-import ru.smirnov.handbook.fragments.NewsFragment;
+import ru.smirnov.handbook.R;
+import ru.smirnov.handbook.fragment.ContactsFragment;
+import ru.smirnov.handbook.fragment.HandbookFragment;
+import ru.smirnov.handbook.fragment.HandbookViewFragment;
+import ru.smirnov.handbook.fragment.NavigationDrawerFragment;
+import ru.smirnov.handbook.fragment.NewsFragment;
+import ru.smirnov.handbook.fragment.NewsViewFragment;
 
 
 public class MainActivity extends Activity
@@ -27,6 +30,7 @@ public class MainActivity extends Activity
      */
     private CharSequence mTitle;
     private String[] navMenuTitles;
+    private Bundle mBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,7 @@ public class MainActivity extends Activity
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+        mTitle = getMenuTitle(0);
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -58,18 +62,43 @@ public class MainActivity extends Activity
             case 2:
                 fragment = new ContactsFragment();
                 break;
+            case 3:
+                fragment = new NewsViewFragment();
+                if (mBundle != null) {
+                    fragment.setArguments(mBundle);
+                    mBundle = null;
+                }
+                break;
+            case 4:
+                fragment = new HandbookViewFragment();
+                if (mBundle != null) {
+                    fragment.setArguments(mBundle);
+                    mBundle = null;
+                }
+                break;
             default:
                 fragment = new HandbookFragment();
                 break;
         }
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
+        if (position < 3) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, fragment)
+                    .commit();
+        } else {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, fragment)
+                    .addToBackStack("fragBack")
+                    .commit();
+        }
 
         mTitle = getMenuTitle(position);
+    }
 
+    public Bundle getBundle() {
+        mBundle = new Bundle();
+        return mBundle;
     }
 
     public void restoreActionBar() {
@@ -95,12 +124,12 @@ public class MainActivity extends Activity
         return super.onCreateOptionsMenu(menu);
     }
 
-    private String getMenuTitle(int position) {
+    private CharSequence getMenuTitle(int position) {
         if (navMenuTitles == null) {
             navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
         }
 
-        return navMenuTitles.length > position ? navMenuTitles[position] : "";
+        return navMenuTitles.length > position ? navMenuTitles[position] : getTitle();
     }
 
 }
