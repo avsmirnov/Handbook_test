@@ -15,6 +15,7 @@ import ru.smirnov.handbook.adapter.NewsAdapter;
 import ru.smirnov.handbook.adapter.datasource.NewsDataSource;
 import ru.smirnov.handbook.adapter.viewholder.NewsViewHolder;
 import ru.smirnov.handbook.db.DB;
+import ru.smirnov.handbook.db.structure.NewsStructure;
 
 /**
  * Created by Alexander Smirnov on 25.09.2014.
@@ -38,7 +39,7 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mDB.open();
 
-        NewsAdapter adapter = new NewsAdapter(getActivity(), new NewsDataSource(mDB.getDB()));
+        NewsAdapter adapter = new NewsAdapter(getActivity(), new NewsDataSource(mDB));
 
         View view = inflater.inflate(R.layout.news, container, false);
         ListView mListView = (ListView) view.findViewById(R.id.listView);
@@ -56,7 +57,7 @@ public class NewsFragment extends Fragment {
                 NewsViewHolder vh = (NewsViewHolder) view.getTag();
 
                 if (vh != null) {
-                    mainActivity.getBundle().putInt("id", vh.id);
+                    mainActivity.getBundle().putLong(NewsStructure.COL_ID, vh.id);
                     mainActivity.onNavigationDrawerItemSelected(3);
                 }
             }

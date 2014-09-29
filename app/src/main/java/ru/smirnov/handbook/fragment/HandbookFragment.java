@@ -1,31 +1,37 @@
 package ru.smirnov.handbook.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.app.LoaderManager;
 import android.content.Context;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.SimpleCursorTreeAdapter;
 
 import ru.smirnov.handbook.R;
+import ru.smirnov.handbook.activity.MainActivity;
 import ru.smirnov.handbook.adapter.HandbookAdapter;
-import ru.smirnov.handbook.adapter.datasource.HandbookDataSource;
 import ru.smirnov.handbook.db.DB;
+import ru.smirnov.handbook.db.structure.DepartmentsStructure;
+import ru.smirnov.handbook.db.structure.EnterpriseStructure;
+import ru.smirnov.handbook.db.structure.NewsStructure;
 
 /**
  * Created by Alexander Smirnov on 25.09.2014.
  */
-public class HandbookFragment extends Fragment {
+public class HandbookFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private DB mDB;
-    private ExpandableListView mListView;
+    private HandbookAdapter mAdapter;
+    private MainActivity mainActivity;
 
-    public HandbookFragment() {}
+    public HandbookFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,32 +58,69 @@ public class HandbookFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mDB.open();
 
-        HandbookAdapter adapter = new HandbookAdapter(getActivity(), new HandbookDataSource(mDB.getDB()));
+        String[] groupFrom = {EnterpriseStructure.COL_NAME};
+        int[] groupTo = {android.R.id.text1};
 
-        View view = inflater.inflate(R.layout.handbook, container, false);
-        Log.e("TEST", "-| " + (view instanceof ExpandableListView));
-        mListView = (ExpandableListView) view.findViewById(R.id.expandableListView);
-        mListView.setAdapter(adapter);
+        String[] childFrom = {DepartmentsStructure.COL_NAME};
+        int[] childTo = {android.R.id.text1};
 
+        mAdapter = new HandbookAdapter(getActivity(),
+                android.R.layout.simple_expandable_list_item_1, groupFrom, groupTo,
+                android.R.layout.simple_list_item_1, childFrom, childTo, mDB);
 
-        return view;
+        getActivity().getLoaderManager().initLoader(0, null, this);
+
+        ExpandableListView expListView = (ExpandableListView) inflater.inflate(R.layout.handbook, container, false);
+        expListView.setAdapter(mAdapter);
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                mainActivity.getBundle().putLong(NewsStructure.COL_ID, id);
+                mainActivity.onNavigationDrawerItemSelected(4);
+                return false;
+            }
+        });
+
+        return expListView;
     }
 
-    class MyAdapter extends SimpleCursorTreeAdapter {
+    @Override
+    public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
+        return new MyCursorLoader(getActivity(), mDB);
+    }
 
-        public MyAdapter(Context context, Cursor cursor, int groupLayout,
-                         String[] groupFrom, int[] groupTo, int childLayout,
-                         String[] childFrom, int[] childTo) {
-            super(context, cursor, groupLayout, groupFrom, groupTo,
-                    childLayout, childFrom, childTo);
-        }
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        mAdapter.setGroupCursor(cursor);
+    }
 
-        protected Cursor getChildrenCursor(Cursor groupCursor) {
-            // получаем курсор по элементам для конкретной группы
-            int idColumn = groupCursor.getColumnIndex("id");
-            return mDB.getDepartmentById(groupCursor.getInt(idColumn));
+    @Override
+    public void onLoaderReset(Loader<Cursor> arg0) {
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        if (activity instanceof MainActivity) {
+            mainActivity = (MainActivity) activity;
+        } else {
+            throw new ClassCastException("Activity must be instance of MainActivity.");
         }
     }
 
+    static class MyCursorLoader extends CursorLoader {
+        DB mDB;
 
+        public MyCursorLoader(Context context, DB db) {
+            super(context);
+            mDB = db;
+        }
+
+        @Override
+        public Cursor loadInBackground() {
+            return mDB.getAllEnterprise();
+        }
+
+    }
 }

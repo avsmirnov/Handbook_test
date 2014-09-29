@@ -1,27 +1,27 @@
 package ru.smirnov.handbook.adapter.datasource;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import ru.smirnov.handbook.adapter.QuickAdapter;
+import ru.smirnov.handbook.db.DB;
 
 /**
  * Created by Alexander on 26.09.2014.
  */
 public class NewsDataSource implements QuickAdapter.DataSource {
-    private SQLiteDatabase mDB;
+    private DB mDB;
 
-    public NewsDataSource(SQLiteDatabase db) {
+    public NewsDataSource(DB db) {
         mDB = db;
     }
 
     @Override
     public Cursor getRowIds() {
-        return mDB.rawQuery("SELECT id FROM News", new String[]{});
+        return mDB.getAllNewsRowIds();
     }
 
     @Override
     public Cursor getRowById(long rowId) {
-        return mDB.rawQuery("SELECT * FROM News WHERE id = ?", new String[]{Long.toString(rowId)});
+        return mDB.getNewsById(rowId);
     }
 }

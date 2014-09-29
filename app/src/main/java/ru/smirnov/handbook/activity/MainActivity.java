@@ -10,8 +10,8 @@ import android.view.Menu;
 
 import ru.smirnov.handbook.R;
 import ru.smirnov.handbook.fragment.ContactsFragment;
+import ru.smirnov.handbook.fragment.DepartmentsViewFragment;
 import ru.smirnov.handbook.fragment.HandbookFragment;
-import ru.smirnov.handbook.fragment.HandbookViewFragment;
 import ru.smirnov.handbook.fragment.NavigationDrawerFragment;
 import ru.smirnov.handbook.fragment.NewsFragment;
 import ru.smirnov.handbook.fragment.NewsViewFragment;
@@ -70,7 +70,7 @@ public class MainActivity extends Activity
                 }
                 break;
             case 4:
-                fragment = new HandbookViewFragment();
+                fragment = new DepartmentsViewFragment();
                 if (mBundle != null) {
                     fragment.setArguments(mBundle);
                     mBundle = null;
@@ -109,7 +109,6 @@ public class MainActivity extends Activity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

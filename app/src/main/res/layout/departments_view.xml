@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@android:string/dialog_alert_title"
+        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/enterprise_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@android:string/dialog_alert_title"
+        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:layout_marginBottom="24dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/departments_title_phone"
+        style="@style/AppTheme.TextView.Label" />
+
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@android:string/dialog_alert_title" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/departments_title_address"
+        style="@style/AppTheme.TextView.Label" />
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@android:string/dialog_alert_title" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/departments_description"
+        style="@style/AppTheme.TextView.Label" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@android:string/dialog_alert_title" />
+
+</LinearLayout>
