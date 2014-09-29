@@ -41,15 +41,8 @@ public class HandbookFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        mDB.open();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+    public void onDestroy() {
+        super.onDestroy();
 
         mDB.close();
     }

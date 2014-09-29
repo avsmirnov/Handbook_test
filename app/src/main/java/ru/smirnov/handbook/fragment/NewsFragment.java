@@ -76,9 +76,10 @@ public class NewsFragment extends Fragment {
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
 
         mainActivity = null;
+        mDB.close();
     }
 }
